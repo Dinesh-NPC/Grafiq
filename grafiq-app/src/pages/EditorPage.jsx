@@ -3,7 +3,6 @@ import { C } from '../styles/designTokens';
 import { Panel, AIBadge } from '../components/shared';
 import { Icon } from '../components/Icons';
 
-// Editor Page
 export const EditorPage = ({ template }) => {
   const [leftTab, setLeftTab] = useState("layers");
   const [rightTab, setRightTab] = useState("style");
@@ -11,7 +10,6 @@ export const EditorPage = ({ template }) => {
   const [zoom, setZoom] = useState(100);
   const [showGrid, setShowGrid] = useState(true);
 
-  // Element styles state - tracks style properties for each element
   const [elementStyles, setElementStyles] = useState({
     headline: {
       fontFamily: "Syne",

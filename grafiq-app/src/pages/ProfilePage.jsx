@@ -3,7 +3,6 @@ import { C } from '../styles/designTokens';
 import { Panel } from '../components/shared';
 import { Icon } from '../components/Icons';
 
-// Profile Page with View and Edit modes
 export const ProfilePage = ({ setPage }) => {
   const [isEditing, setIsEditing] = useState(false);
   
