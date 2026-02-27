@@ -11,6 +11,46 @@ export const EditorPage = ({ template }) => {
   const [zoom, setZoom] = useState(100);
   const [showGrid, setShowGrid] = useState(true);
 
+  // Element styles state - tracks style properties for each element
+  const [elementStyles, setElementStyles] = useState({
+    headline: {
+      fontFamily: "Syne",
+      fontSize: 28,
+      fontWeight: 700,
+      color: "#FFFFFF",
+      padding: 4,
+      margin: 0,
+      gap: 0,
+      borderRadius: 4,
+      shadow: "0 4px 12px rgba(0,0,0,0.5)",
+      textAlign: "left",
+    },
+    subtitle: {
+      fontFamily: "Syne",
+      fontSize: 14,
+      fontWeight: 400,
+      color: "#94A3B8",
+      padding: 4,
+      margin: 0,
+      gap: 0,
+      borderRadius: 4,
+      shadow: "none",
+      textAlign: "left",
+    },
+    score: {
+      fontFamily: "Syne",
+      fontSize: 24,
+      fontWeight: 700,
+      color: "#22D3EE",
+      padding: 4,
+      margin: 0,
+      gap: 0,
+      borderRadius: 4,
+      shadow: "none",
+      textAlign: "center",
+    },
+  });
+
   const layers = [
     { id: "background", label: "Background", type: "rect", locked: false },
     { id: "logo", label: "Team Logo", type: "image", locked: false },
@@ -21,10 +61,24 @@ export const EditorPage = ({ template }) => {
   ];
 
   const elements = [
-    { id: "headline", x: 60, y: 80, w: 360, h: 60, label: "India Clinches Historic Victory", type: "text", fontSize: 28, color: "#FFFFFF" },
-    { id: "subtitle", x: 60, y: 150, w: 260, h: 32, label: "IPL Final 2025", type: "text", fontSize: 14, color: "#94A3B8" },
-    { id: "score", x: 280, y: 200, w: 120, h: 48, label: "187 / 4", type: "text", fontSize: 24, color: "#22D3EE" },
+    { id: "headline", x: 60, y: 80, w: 360, h: 60, label: "India Clinches Historic Victory", type: "text" },
+    { id: "subtitle", x: 60, y: 150, w: 260, h: 32, label: "IPL Final 2025", type: "text" },
+    { id: "score", x: 280, y: 200, w: 120, h: 48, label: "187 / 4", type: "text" },
   ];
+
+  // Get current element's style
+  const currentStyle = elementStyles[selectedEl] || elementStyles.headline;
+
+  // Update style property for selected element
+  const updateStyle = (property, value) => {
+    setElementStyles(prev => ({
+      ...prev,
+      [selectedEl]: {
+        ...prev[selectedEl],
+        [property]: value,
+      },
+    }));
+  };
 
   const aiSuggestions = [
     "Add gradient overlay for depth",
@@ -153,17 +207,21 @@ export const EditorPage = ({ template }) => {
             position: "relative", overflow: "hidden", cursor: "crosshair",
             transition: "width 0.15s, height 0.15s",
           }}>
-            {elements.map(el => (
+            {elements.map(el => {
+              const style = elementStyles[el.id] || elementStyles.headline;
+              return (
               <div key={el.id} onClick={() => setSelectedEl(el.id)} style={{
                 position: "absolute",
                 left: `${el.x * zoom / 100}px`, top: `${el.y * zoom / 100}px`,
                 width: `${el.w * zoom / 100}px`,
-                fontFamily: "Syne, sans-serif",
-                fontSize: `${el.fontSize * zoom / 100}px`,
-                color: el.color, fontWeight: 700, cursor: "move",
-                padding: "2px 4px",
+                fontFamily: `${style.fontFamily}, sans-serif`,
+                fontSize: `${style.fontSize * zoom / 100}px`,
+                color: style.color, fontWeight: style.fontWeight, cursor: "move",
+                padding: `${style.padding * zoom / 100}px`,
                 border: selectedEl === el.id ? `1px dashed rgba(99,102,241,0.8)` : "1px dashed transparent",
-                borderRadius: 4,
+                borderRadius: style.borderRadius,
+                boxShadow: style.shadow,
+                textAlign: style.textAlign,
                 userSelect: "none",
                 display: "flex", alignItems: "center",
               }}>
@@ -172,7 +230,8 @@ export const EditorPage = ({ template }) => {
                   <div style={{ position: "absolute", top: -6, left: -6, right: -6, bottom: -6, border: `2px solid ${C.accent}`, borderRadius: 6, pointerEvents: "none", boxShadow: `0 0 12px rgba(99,102,241,0.4)` }} />
                 )}
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
@@ -200,13 +259,28 @@ export const EditorPage = ({ template }) => {
               <div>
                 <div style={{ fontSize: 11, color: C.textMuted, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>Typography</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  <select style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 12px", color: C.text, fontSize: 13, outline: "none" }}>
-                    <option>Syne</option><option>DM Sans</option><option>Inter</option>
+                  <select 
+                    value={currentStyle.fontFamily} 
+                    onChange={(e) => updateStyle('fontFamily', e.target.value)}
+                    style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 12px", color: C.text, fontSize: 13, outline: "none" }}>
+                    <option value="Syne">Syne</option>
+                    <option value="DM Sans">DM Sans</option>
+                    <option value="Inter">Inter</option>
                   </select>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                    <input type="number" defaultValue="28" style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 10px", color: C.text, fontSize: 13, outline: "none" }} />
-                    <select style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 10px", color: C.text, fontSize: 13, outline: "none" }}>
-                      <option>Bold</option><option>SemiBold</option><option>Regular</option>
+                    <input 
+                      type="number" 
+                      value={currentStyle.fontSize} 
+                      onChange={(e) => updateStyle('fontSize', parseInt(e.target.value) || 16)}
+                      style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 10px", color: C.text, fontSize: 13, outline: "none" }} 
+                    />
+                    <select 
+                      value={currentStyle.fontWeight} 
+                      onChange={(e) => updateStyle('fontWeight', parseInt(e.target.value))}
+                      style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 8, padding: "8px 10px", color: C.text, fontSize: 13, outline: "none" }}>
+                      <option value="700">Bold</option>
+                      <option value="600">SemiBold</option>
+                      <option value="400">Regular</option>
                     </select>
                   </div>
                 </div>
@@ -216,35 +290,57 @@ export const EditorPage = ({ template }) => {
                 <div style={{ fontSize: 11, color: C.textMuted, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>Colors</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {["#FFFFFF", "#6366F1", "#22D3EE", "#10B981", "#F59E0B", "#EF4444", "#1E40AF", "#7C3AED"].map(color => (
-                    <div key={color} style={{
-                      width: 28, height: 28, borderRadius: 6, background: color,
-                      cursor: "pointer", border: "2px solid transparent",
-                    }} />
+                    <div 
+                      key={color} 
+                      onClick={() => updateStyle('color', color)}
+                      style={{
+                        width: 28, height: 28, borderRadius: 6, background: color,
+                        cursor: "pointer", border: currentStyle.color === color ? `2px solid ${C.accent}` : "2px solid transparent",
+                      }} 
+                    />
                   ))}
                 </div>
               </div>
 
               <div>
                 <div style={{ fontSize: 11, color: C.textMuted, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>Spacing</div>
-                {["Padding", "Margin", "Gap"].map(prop => (
+                {[
+                  { label: "Padding", prop: "padding" }, 
+                  { label: "Margin", prop: "margin" }, 
+                  { label: "Gap", prop: "gap" }
+                ].map(({ label, prop }) => (
                   <div key={prop} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                    <span style={{ fontSize: 12, color: C.textSub }}>{prop}</span>
-                    <input type="number" defaultValue={prop === "Gap" ? 8 : 16} style={{ width: 64, background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 6, padding: "5px 8px", color: C.text, fontSize: 12, outline: "none" }} />
+                    <span style={{ fontSize: 12, color: C.textSub }}>{label}</span>
+                    <input 
+                      type="number" 
+                      value={currentStyle[prop]} 
+                      onChange={(e) => updateStyle(prop, parseInt(e.target.value) || 0)}
+                      style={{ width: 64, background: "rgba(255,255,255,0.04)", border: `1px solid ${C.border}`, borderRadius: 6, padding: "5px 8px", color: C.text, fontSize: 12, outline: "none" }} 
+                    />
                   </div>
                 ))}
               </div>
 
               <div>
                 <div style={{ fontSize: 11, color: C.textMuted, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>Shadow</div>
-                <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${C.border}`, borderRadius: 8, padding: 10, display: "flex", alignItems: "center", gap: 8 }}>
-                  <div style={{ width: 32, height: 24, background: "#1a1a2e", borderRadius: 4, boxShadow: "0 4px 12px rgba(0,0,0,0.5)" }} />
-                  <span style={{ fontSize: 12, color: C.textSub }}>0 4px 12px rgba(0,0,0,0.5)</span>
+                <div 
+                  onClick={() => updateStyle('shadow', currentStyle.shadow === 'none' ? '0 4px 12px rgba(0,0,0,0.5)' : 'none')}
+                  style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${C.border}`, borderRadius: 8, padding: 10, display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+                  <div style={{ width: 32, height: 24, background: "#1a1a2e", borderRadius: 4, boxShadow: currentStyle.shadow }} />
+                  <span style={{ fontSize: 12, color: C.textSub }}>{currentStyle.shadow === 'none' ? 'None' : '0 4px 12px rgba(0,0,0,0.5)'}</span>
                 </div>
               </div>
 
               <div>
                 <div style={{ fontSize: 11, color: C.textMuted, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>Border Radius</div>
-                <input type="range" min="0" max="24" defaultValue="8" style={{ width: "100%", accentColor: C.accent }} />
+                <input 
+                  type="range" 
+                  min="0" 
+                  max="24" 
+                  value={currentStyle.borderRadius} 
+                  onChange={(e) => updateStyle('borderRadius', parseInt(e.target.value))}
+                  style={{ width: "100%", accentColor: C.accent }} 
+                />
               </div>
             </div>
           )}
