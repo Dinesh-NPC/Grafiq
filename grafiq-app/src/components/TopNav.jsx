@@ -10,6 +10,7 @@ export const TopNav = ({ currentPage, setPage, sidebarOpen, setSidebarOpen }) =>
       case "preview": return "AI Preview";
       case "editor": return "Editor";
       case "analytics": return "Analytics";
+      case "profile": return "Profile";
       default: return "Dashboard";
     }
   };
@@ -78,7 +79,9 @@ export const TopNav = ({ currentPage, setPage, sidebarOpen, setSidebarOpen }) =>
         background: `linear-gradient(135deg, ${C.accent}, #818CF8)`,
         display: "flex", alignItems: "center", justifyContent: "center",
         fontSize: 13, fontWeight: 700, cursor: "pointer",
-      }}>JD</div>
+      }}
+      onClick={() => setPage("profile")}
+      >JD</div>
     </div>
   );
 };

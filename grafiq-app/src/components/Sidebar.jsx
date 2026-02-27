@@ -45,7 +45,7 @@ export const Sidebar = ({ currentPage, setPage, open }) => {
         <div style={{ flex: 1 }} />
         
         {/* AI Status */}
-        <div style={{ marginTop: "auto", padding: "12px 8px", marginTop: 32 }}>
+        <div style={{ marginTop: "auto", padding: "12px 8px" }}>
           <div style={{ background: C.aiDim, border: `1px solid rgba(34,211,238,0.2)`, borderRadius: 10, padding: "10px 12px" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
               <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.ai, boxShadow: `0 0 6px ${C.ai}` }} />

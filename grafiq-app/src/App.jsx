@@ -8,6 +8,7 @@ import { TemplatesPage } from './pages/TemplatesPage';
 import { PreviewPage } from './pages/PreviewPage';
 import { EditorPage } from './pages/EditorPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
+import { ProfilePage } from './pages/ProfilePage';
 import { ALL_TEMPLATES } from './data/mockData';
 
 // Main App Component
@@ -36,6 +37,8 @@ export default function App() {
         return <EditorPage template={selectedTemplate} />;
       case "analytics": 
         return <AnalyticsPage />;
+      case "profile": 
+        return <ProfilePage setPage={navigate} />;
       default: 
         return <HomePage setPage={navigate} setSelectedTemplate={handleSetTemplate} />;
     }

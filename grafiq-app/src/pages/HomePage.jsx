@@ -26,7 +26,7 @@ export const HomePage = ({ setPage, setSelectedTemplate }) => {
           <span style={{ fontSize: 12, color: C.textMuted }}>Powered by Grafiq-LTR v2</span>
         </div>
         <h1 className="syne" style={{ fontSize: 36, fontWeight: 800, color: C.text, lineHeight: 1.2, letterSpacing: "-0.03em", marginBottom: 8 }}>
-          Good morning, Jordan.
+Good morning, Dinesh.
         </h1>
         <p style={{ fontSize: 15, color: C.textMuted }}>Your AI has 6 template recommendations waiting based on Cricket Finals.</p>
       </div>

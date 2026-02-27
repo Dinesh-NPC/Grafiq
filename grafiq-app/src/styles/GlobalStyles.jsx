@@ -3,14 +3,14 @@ import { C } from './designTokens';
 // Global Styles
 export const GlobalStyle = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
     
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
     body {
       background: ${C.bg};
       color: ${C.text};
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-font-smoothing: antialiased;
       overflow: hidden;
     }
@@ -61,7 +61,7 @@ export const GlobalStyle = () => (
       border: none;
       border-radius: 10px;
       padding: 10px 20px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 600;
       font-size: 14px;
       cursor: pointer;
@@ -77,7 +77,7 @@ export const GlobalStyle = () => (
       border: 1px solid ${C.border};
       border-radius: 10px;
       padding: 9px 18px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 14px;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -103,7 +103,7 @@ export const GlobalStyle = () => (
     .nav-item.active { background: ${C.accentDim}; color: ${C.accent}; border-color: rgba(99,102,241,0.2); }
     
     input, textarea, select {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
     
     .resizable-panel { transition: width 0.2s ease; }
