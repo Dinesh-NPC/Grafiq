@@ -3,7 +3,6 @@ import { C } from '../styles/designTokens';
 import { Panel, AIBadge } from '../components/shared';
 import { Icon } from '../components/Icons';
 
-// Editor Page
 export const EditorPage = ({ template }) => {
   const [leftTab, setLeftTab] = useState("layers");
   const [rightTab, setRightTab] = useState("style");
